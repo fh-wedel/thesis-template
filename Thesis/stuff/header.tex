@@ -1,0 +1,109 @@
+% $Id: header.tex 1229 2009-10-23 13:58:42Z inf6254 $
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\documentclass
+  [ %twoside,            % beidseitiger Druck
+   BCOR=10mm          % Bindekorrektur
+  , openright          % Kapitel beginnen auf einer rechten Seite
+  , listof=totoc       % Verzeichnisse im Inhaltsverzeichnis
+  , bibliography=totoc % Literaturverzeichnis im Inhaltsverzeichnis
+  , parskip=half       % Absätze durch einen vergrößerten Zeilenabstand getrennt
+%  , draft              % Entwurfsversion
+  ]{scrreprt}          % Dokumentenklasse: KOMA-Script Buch
+  
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Packages
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage{scrhack}
+
+ 
+\usepackage{ifpdf}
+\ifpdf
+  \usepackage{ae}               % Fonts für pdfLaTeX, falls keine cm-super-Fonts installiert
+  \usepackage{microtype}        % optischer Randausgleich, falls pdflatex verwandt
+  \usepackage[pdftex]{graphicx} % Grafiken in pdfLaTeX
+\else
+  \usepackage[dvips]{graphicx}  % Grafiken und normales LaTeX
+\fi
+
+\usepackage[utf8]{inputenc}         % Input encoding (allow direct use of special characters like "ä")
+%\usepackage[english]{babel}
+\usepackage[ngerman]{babel}
+\usepackage[T1]{fontenc}
+\usepackage[automark]{scrpage2} 	% Schickerer Satzspiegel mit KOMA-Script
+\usepackage{setspace}           	% Allow the modification of the space between lines
+\usepackage{booktabs}           	% Netteres Tabellenlayout
+\usepackage{multicol}               % Mehrspaltige Bereiche
+\usepackage{quotchap}               % Beautiful chapter decoration
+\usepackage[printonlyused]{acronym} % list of acronyms and abbreviations
+\usepackage{subfig}                 % allow sub figures
+\usepackage{tabularx}              % Tabellen mit fester Breite
+
+% Layout
+\pagestyle{scrheadings}
+%\pagestyle{empty}
+\clubpenalty = 10000
+\widowpenalty = 10000
+\displaywidowpenalty = 10000
+
+\makeatletter
+\renewcommand{\fps@figure}{htbp}
+\makeatother
+
+%% Document properties %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\projname}{Der Projektname}
+\newcommand{\titel}{Der Titel}
+\newcommand{\authorname}{Max Mustermann}
+\newcommand{\thesisname}{Bachelor Thesis}
+\newcommand{\untertitel}{untertitel }
+\newcommand{\Datum}{26 Februar 2010}
+
+\ifpdf
+  \usepackage{hyperref}
+  \definecolor{darkblue}{rgb}{0,0,.5}
+  \hypersetup
+  	{ colorlinks=true
+  	, breaklinks=true
+    , linkcolor=darkblue
+    , menucolor=darkblue
+    , urlcolor=darkblue
+    , pdftitle={\projname -- \untertitel}
+    , pdfsubject={\thesisname}
+    , pdfauthor={\authorname}
+    }
+\else
+\fi
+
+%% Listings %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage{listings}
+\KOMAoptions{listof=totoc} % necessary because of scrhack
+\renewcommand{\lstlistlistingname}{List of Listings}
+\lstset
+  { basicstyle=\small\ttfamily
+  , breaklines=true
+  , captionpos=b
+  , showstringspaces=false
+  , keywordstyle={}
+  }
+
+\lstnewenvironment{inlinehaskell}
+{\spacing{1}\lstset{language=haskell,nolol,aboveskip=\bigskipamount}}
+{\endspacing}
+
+\lstnewenvironment{inlinexml}
+{\spacing{1}\lstset{language=XML,nolol,aboveskip=\bigskipamount}}
+{\endspacing}
+
+\newcommand{\haskellinput}[2][]{
+  \begin{spacing}{1}
+  \lstinputlisting[language=Haskell,nolol,aboveskip=\bigskipamount,#1]{#2}
+  \end{spacing}
+}
+
+\newcommand{\haskellcode}[2][]{\mylisting[#1,language=Haskell]{#2}}
+
+\newcommand{\mylisting}[2][]{
+\begin{spacing}{1}
+\lstinputlisting[frame=lines,aboveskip=2\bigskipamount,#1]{#2}
+\end{spacing}
+}
