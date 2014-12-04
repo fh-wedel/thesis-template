@@ -1,8 +1,7 @@
 % $Id: header.tex 1229 2009-10-23 13:58:42Z inf6254 $
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \documentclass
-  [ %twoside,            % beidseitiger Druck
-   BCOR=10mm          % Bindekorrektur
+  [ %twoside            % beidseitiger Druck
   , openright          % Kapitel beginnen auf einer rechten Seite
   , listof=totoc       % Verzeichnisse im Inhaltsverzeichnis
   , bibliography=totoc % Literaturverzeichnis im Inhaltsverzeichnis
@@ -26,18 +25,24 @@
   \usepackage[dvips]{graphicx}  % Grafiken und normales LaTeX
 \fi
 
+\usepackage[a4paper,%
+            inner=2.0cm,outer=2.0cm,bindingoffset=0.5cm,%
+            top=1.5cm,bottom=1.5cm,%
+            footskip=1.0cm,includeheadfoot]{geometry}
+            
 \usepackage[utf8]{inputenc}         % Input encoding (allow direct use of special characters like "ä")
 %\usepackage[english]{babel}
 \usepackage[ngerman]{babel}
 \usepackage[T1]{fontenc}
-\usepackage[automark]{scrpage2} 	% Schickerer Satzspiegel mit KOMA-Script
-\usepackage{setspace}           	% Allow the modification of the space between lines
-\usepackage{booktabs}           	% Netteres Tabellenlayout
+\usepackage[automark]{scrpage2} 	 % Schickerer Satzspiegel mit KOMA-Script
+\usepackage{setspace}           	 % Allow the modification of the space between lines
+\usepackage{booktabs}           	 % Netteres Tabellenlayout
 \usepackage{multicol}               % Mehrspaltige Bereiche
 \usepackage{quotchap}               % Beautiful chapter decoration
 \usepackage[printonlyused]{acronym} % list of acronyms and abbreviations
 \usepackage{subfig}                 % allow sub figures
-\usepackage{tabularx}              % Tabellen mit fester Breite
+\usepackage{tabularx}               % Tabellen mit fester Breite
+\usepackage{lipsum}                 % für Blindtexte
 
 % Layout
 \pagestyle{scrheadings}
@@ -73,6 +78,8 @@
     }
 \else
 \fi
+
+\bibliographystyle{alpha}
 
 %% Listings %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \usepackage{listings}
