@@ -1,0 +1,51 @@
+@preamble{"\providecommand{\NOOPSORT}[1]{}"}
+
+@online{quelle,
+    author = {Nachname, Vorname}, 
+    title = {Name der Quelle},
+    url = {http://www.website.com/pfad/zu/einem/bild.png},
+    date = {2087-07-23},
+    urldate = {2022-02-02}
+}
+
+@online{tuoski:2022,
+    author = {{\NOOPSORT{Tuoski}}"Tuoski"}, % ignoriere Anführungszeichen beim Sortieren
+    title = {stackoverflow.com},
+    url = {https://stackoverflow.com/a/186309/17413053},
+    date = {2008-10-08},
+    urldate = {2022-01-04}
+}
+
+@inbook{caterpillar,
+    title = {The Very Hungry Caterpillar},
+    publisher = {Puffin}, 
+    place = {London, England},
+    author = {Carle, Eric}, % wird als Eric Carle angezeigt, aber nach Carle sortiert
+    edition = {1},
+    year = {1994}, 
+    chapter = {5},
+    pages = {125–140},
+    ISBN = {9780241003008},
+    note = {\url{https://en.wikipedia.org/wiki/The_Very_Hungry_Caterpillar}}
+}
+
+@online{bee_movie,
+    author = {Smith, Simon J. and Hickner, Steve}, 
+    title = {Bee Movie Script - Dialogue Transcript},
+    url = {http://www.script-o-rama.com/movie_scripts/a1/bee-movie-script-transcript-seinfeld.html},
+    date = {2007-12-13},
+    urldate = {2022-02-18}
+}
+
+@Article{join_study,
+    AUTHOR = {Celesti, Antonio and Fazio, Maria and Villari, Massimo}, % Autoren mit and trennen
+    TITLE = {A Study on Join Operations in MongoDB Preserving Collections Data Models for Future Internet Applications},
+    JOURNAL = {Future Internet},
+    VOLUME = {11},
+    YEAR = {2019},
+    NUMBER = {4},
+    ARTICLE-NUMBER = {83},
+    URL = {https://www.mdpi.com/1999-5903/11/4/83},
+    ISSN = {1999-5903},
+    DOI = {10.3390/fi11040083}
+}

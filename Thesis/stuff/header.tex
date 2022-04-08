@@ -1,21 +1,42 @@
-% $Id: header.tex 1229 2009-10-23 13:58:42Z inf6254 $
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \documentclass
-  [ %twoside            % beidseitiger Druck
+  [ 12pt
+  %twoside            % beidseitiger Druck
   , openright          % Kapitel beginnen auf einer rechten Seite
   , listof=totoc       % Verzeichnisse im Inhaltsverzeichnis
   , bibliography=totoc % Literaturverzeichnis im Inhaltsverzeichnis
-  , parskip=half       % Absätze durch einen vergrößerten Zeilenabstand getrennt
+  , parskip=full       % Absätze durch einen vergrößerten Zeilenabstand getrennt
 %  , draft              % Entwurfsversion
   ]{scrreprt}          % Dokumentenklasse: KOMA-Script Buch
-  
+
+%%%%%%%%%%%%%%%%%%%  Document info  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\projname}{Bachelor Thesis}
+\newcommand{\titel}{Analyse der Zeitersparnis der Verwendung eines Templates bei der Erstellung einer Bachelor Thesis}
+\newcommand{\untertitel}{}
+\newcommand{\thesisname}{Bachelor Thesis}
+\newcommand{\Datum}{23. Februar 20XX}
+\newcommand{\authorname}{Maximilian Mustermann}
+%%%%%%%%%%%%%%%%%%%  Document info  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Packages
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \usepackage{scrhack}
+\usepackage{url}
+\usepackage{wrapfig}
+\usepackage{xcolor}
+\usepackage[font=footnotesize]{caption}
+\setlength{\abovecaptionskip}{5pt}
+\setlength{\belowcaptionskip}{10pt}
+\usepackage{listings}
+\usepackage{makecell}
+\usepackage{array}
+%\usepackage{scrextend}
+\newcolumntype{x}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}p{#1}}
+\newcommand{\paragraphnl}[1]{\paragraph{#1}\mbox{}\\\vspace{-1cm}}
 
- 
+\newcommand{\tabitem}{~~\llap{\textbullet}~~}
+
 \usepackage{ifpdf}
 \ifpdf
   \usepackage{ae}               % Fonts für pdfLaTeX, falls keine cm-super-Fonts installiert
@@ -26,42 +47,39 @@
 \fi
 
 \usepackage[a4paper,%
-            inner=2.0cm,outer=2.0cm,bindingoffset=0.5cm,%
-            top=1.5cm,bottom=1.5cm,%
-            footskip=1.0cm,includeheadfoot]{geometry}
+    %bindingoffset=0.5cm,%
+    left=3.5cm,
+    right=3.0cm,
+    top=3.0cm,
+    bottom=3.0cm,
+    footskip=1.0cm,
+    includeheadfoot
+]{geometry}
             
 \usepackage[utf8]{inputenc}         % Input encoding (allow direct use of special characters like "ä")
 %\usepackage[english]{babel}
 \usepackage[ngerman]{babel}
 \usepackage[T1]{fontenc}
-\usepackage[automark]{scrpage2} 	 % Schickerer Satzspiegel mit KOMA-Script
+\usepackage[printonlyused]{acronym} % list of acronyms and abbreviations
+\usepackage[automark]{scrlayer-scrpage} 	 % Schickerer Satzspiegel mit KOMA-Script
 \usepackage{setspace}           	 % Allow the modification of the space between lines
 \usepackage{booktabs}           	 % Netteres Tabellenlayout
 \usepackage{multicol}               % Mehrspaltige Bereiche
+\usepackage{multirow}
 \usepackage{quotchap}               % Beautiful chapter decoration
-\usepackage[printonlyused]{acronym} % list of acronyms and abbreviations
 \usepackage{subfig}                 % allow sub figures
 \usepackage{tabularx}               % Tabellen mit fester Breite
-\usepackage{lipsum}                 % für Blindtexte
-
-% Layout
-\pagestyle{scrheadings}
-%\pagestyle{empty}
-\clubpenalty = 10000
-\widowpenalty = 10000
-\displaywidowpenalty = 10000
-
-\makeatletter
-\renewcommand{\fps@figure}{htbp}
-\makeatother
-
-%% Document properties %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\newcommand{\projname}{Der Projektname}
-\newcommand{\titel}{Der Titel}
-\newcommand{\authorname}{Max Mustermann}
-\newcommand{\thesisname}{Bachelor Thesis}
-\newcommand{\untertitel}{untertitel }
-\newcommand{\Datum}{26 Februar 2010}
+\usepackage{longtable}
+\usepackage[
+    backend=biber,
+    style=numeric,
+    natbib=true,
+    sorting=nty 
+]{biblatex}
+\addbibresource{sources.bib}
+% COdeblock stuff
+\usepackage{listings}
+\usepackage{csquotes}
 
 \ifpdf
   \usepackage{hyperref}
@@ -69,10 +87,10 @@
   \hypersetup
   	{ colorlinks=true
   	, breaklinks=true
-    , linkcolor=darkblue
-    , menucolor=darkblue
-    , urlcolor=darkblue
-    , citecolor=darkblue
+    , linkcolor=black
+    , menucolor=black
+    , urlcolor=black
+    , citecolor=black
     , pdftitle={\projname -- \untertitel}
     , pdfsubject={\thesisname}
     , pdfauthor={\authorname}
@@ -80,38 +98,244 @@
 \else
 \fi
 
-\bibliographystyle{alpha}
 
-%% Listings %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%% Listings (Code Blocks) %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 \usepackage{listings}
 \KOMAoptions{listof=totoc} % necessary because of scrhack
 \renewcommand{\lstlistlistingname}{List of Listings}
 \lstset
   { basicstyle=\small\ttfamily
-  , breaklines=true
+  , breaklines=false
   , captionpos=b
   , showstringspaces=false
   , keywordstyle={}
   }
 
-\lstnewenvironment{inlinehaskell}
-{\spacing{1}\lstset{language=haskell,nolol,aboveskip=\bigskipamount}}
-{\endspacing}
+\renewcommand{\lstlistlistingname}{Quelltextverzeichnis}
+\renewcommand{\lstlistingname}{Quelltext}
 
-\lstnewenvironment{inlinexml}
-{\spacing{1}\lstset{language=XML,nolol,aboveskip=\bigskipamount}}
-{\endspacing}
 
-\newcommand{\haskellinput}[2][]{
-  \begin{spacing}{1}
-  \lstinputlisting[language=Haskell,nolol,aboveskip=\bigskipamount,#1]{#2}
-  \end{spacing}
+\definecolor{codegreen}{rgb}{0.22, 0.85, 0.35}
+\definecolor{codeblue}{rgb}{0.22, 0.51, 0.85}
+\definecolor{codeyellow}{rgb}{0.61, 0.55, 0.04}
+\definecolor{codeorange}{rgb}{0.85, 0.69, 0.22}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{codered}{rgb}{0.85, 0.22, 0.27}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+
+\definecolor{numbercolor}{rgb}{0.7,0.43,0}
+
+\lstdefinelanguage{sql}{
+    morekeywords={
+        ADD, CONSTRAINT, ALTER, COLUMN, TABLE, ALL, AND, ANY, AS, ASC, BACKUP, DATABASE, BETWEEN, CASE, CHECK, COLUMN, CREATE, INDEX, REPLACE, VIEW, PROCEDURE, UNIQUE, DEFAULT, DELETE, DESC, DISTINCT, DROP, EXEC, EXISTS, FOREIGN, KEY, FROM, FULL, OUTER, JOIN, GROUP, BY, HAVING, IN,  INNER, INSERT, INTO, IS, NULL, NOT, LEFT, LIKE, LIMIT, OR, ORDER, PRIMARY, RIGHT, ROWNUM, SELECT, TOP, SET, TRUNCATE, UNION, UPDATE, VALUES, WHERE, RETURNING, RETURNS, LANGUAGE, SQL, COALESCE, WHEN, THEN, BEGIN, END, ON, LEAKPROOF, DECLARE, NEW, IF, RAISE, EXCEPTION, RETURN, FUNCTION, OWNER, TO, ELSE, BEFORE, FOR, EACH, ROW, EXECUTE, INCLUDE, USING, integer, int, IF, ELSIF, NULLS, FIRST, TRIGGER
+    },
+    backgroundcolor=\color{white},
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{codered},
+    stringstyle=\color{codegreen},
+    basicstyle=\ttfamily\linespread{1}\footnotesize,
+    morecomment=[l]{--},
+    breakatwhitespace=true,
+    breaklines=false,
+    morestring=[b][\color{codegreen}]{'},
+    morestring=[b][\color{codeblue}]{"},
+    captionpos=b,
+    keepspaces=true,
+    showspaces=false,
+    showstringspaces=false,
+    showtabs=false,
+    tabsize=2,
+    showlines=true,
+    literate=
+        *{0}{{{\color{numbercolor}0}}}{1}
+         {1}{{{\color{numbercolor}1}}}{1}
+         {2}{{{\color{numbercolor}2}}}{1}
+         {3}{{{\color{numbercolor}3}}}{1}
+         {4}{{{\color{numbercolor}4}}}{1}
+         {5}{{{\color{numbercolor}5}}}{1}
+         {6}{{{\color{numbercolor}6}}}{1}
+         {7}{{{\color{numbercolor}7}}}{1}
+         {8}{{{\color{numbercolor}8}}}{1}
+         {9}{{{\color{numbercolor}9}}}{1}
+        {Ö}{{\"O}}1
+        {Ä}{{\"A}}1
+        {Ü}{{\"U}}1
+        {ß}{{\ss}}1
+        {ü}{{\"u}}1
+        {ä}{{\"a}}1
+        {ö}{{\"o}}1
+        {\ \ }{{\ }}1
 }
 
-\newcommand{\haskellcode}[2][]{\mylisting[#1,language=Haskell]{#2}}
-
-\newcommand{\mylisting}[2][]{
-\begin{spacing}{1}
-\lstinputlisting[frame=lines,aboveskip=2\bigskipamount,#1]{#2}
-\end{spacing}
+\lstdefinelanguage{sql_no_num}{
+    morekeywords={
+        ADD, CONSTRAINT, ALTER, COLUMN, TABLE, ALL, AND, ANY, AS, ASC, BACKUP, DATABASE, BETWEEN, CASE, CHECK, COLUMN, CREATE, INDEX, REPLACE, VIEW, PROCEDURE, UNIQUE, DEFAULT, DELETE, DESC, DISTINCT, DROP, EXEC, EXISTS, FOREIGN, KEY, FROM, FULL, OUTER, JOIN, GROUP, BY, HAVING, IN,  INNER, INSERT, INTO, IS, NULL, NOT, LEFT, LIKE, LIMIT, OR, ORDER, PRIMARY, RIGHT, ROWNUM, SELECT, TOP, SET, TRUNCATE, UNION, UPDATE, VALUES, WHERE, RETURNING, RETURNS, LANGUAGE, SQL, COALESCE, WHEN, THEN, BEGIN, END, ON, LEAKPROOF, DECLARE, NEW, IF, RAISE, EXCEPTION, RETURN, FUNCTION, OWNER, TO, ELSE, BEFORE, FOR, EACH, ROW, EXECUTE, INCLUDE, USING, integer, int, IF, ELSIF, NULLS, FIRST, TRIGGER
+    },
+    backgroundcolor=\color{white},
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{codered},
+    stringstyle=\color{codegreen},
+    basicstyle=\ttfamily\linespread{1}\footnotesize,
+    morecomment=[l]{--},
+    morestring=[b]{'},
+    breakatwhitespace=true,
+    breaklines=false,
+    captionpos=b,
+    keepspaces=true,
+    showspaces=false,
+    showstringspaces=false,
+    showtabs=false,
+    tabsize=2,
+    showlines=true,
+    literate=
+        {Ö}{{\"O}}1
+        {Ä}{{\"A}}1
+        {Ü}{{\"U}}1
+        {ß}{{\ss}}1
+        {ü}{{\"u}}1
+        {ä}{{\"a}}1
+        {ö}{{\"o}}1
+        {\ \ }{{\ }}1
 }
+
+\usepackage{bera}
+\definecolor{eclipseStrings}{RGB}{42,0.0,255}
+\definecolor{eclipseKeywords}{RGB}{127,0,85}
+\colorlet{numb}{magenta!60!black}
+
+\lstdefinelanguage{json}{
+    basicstyle=\ttfamily\linespread{1}\footnotesize,
+    commentstyle=\color{black},
+    stringstyle=\color{codegreen},
+    numbers=left,
+    numberstyle=\color{black},
+    xleftmargin=1.5em,
+    stepnumber=1,
+    numbersep=8pt,
+    tabsize=2,
+    showstringspaces=false,
+    breaklines=false,
+    frame=lines,
+%    backgroundcolor=\color{gray}, %only if you like
+    morestring=[b]",
+    morestring=[d]]’,
+%    comment=[l]{:\ "},
+%    morecomment=[l]{:"},
+    keywordstyle=\color{numb},
+    literate=
+        *{0}{{{\color{numbercolor}0}}}{1}
+         {1}{{{\color{numbercolor}1}}}{1}
+         {2}{{{\color{numbercolor}2}}}{1}
+         {3}{{{\color{numbercolor}3}}}{1}
+         {4}{{{\color{numbercolor}4}}}{1}
+         {5}{{{\color{numbercolor}5}}}{1}
+         {6}{{{\color{numbercolor}6}}}{1}
+         {7}{{{\color{numbercolor}7}}}{1}
+         {8}{{{\color{numbercolor}8}}}{1}
+         {9}{{{\color{numbercolor}9}}}{1}
+         {null}{{{\color{numbercolor}null}}}{4}
+         {true}{{{\color{numbercolor}true}}}{5}
+         {false}{{{\color{numbercolor}false}}}{5}
+        {Ö}{{\"O}}1
+        {Ä}{{\"A}}1
+        {Ü}{{\"U}}1
+        {ß}{{\ss}}1
+        {ü}{{\"u}}1
+        {ä}{{\"a}}1
+        {ö}{{\"o}}1
+        {\ \ }{{\ }}1
+}
+
+\lstdefinestyle{annotation_style}{
+    morestring=[s][\color{black}]{"atn_id}{":},
+    morestring=[s][\color{black}]{"timestamp}{":},
+    morestring=[s][\color{black}]{"annotation}{":},
+    morestring=[s][\color{black}]{"valid_from}{":},
+    morestring=[s][\color{black}]{"valid_until}{":}
+}
+
+\lstdefinelanguage{python}{
+    morekeywords=[1]{
+        None,and,as,assert,break,class,continue,def,del,elif,
+        else,except,finally,for,from,global,if,import,in,is,lambda,nonlocal,
+        not,or,pass,print,raise,return,try,while,with,yield,repeat,
+        Exception,False,True,abs,all,any,ascii,bin,bool,bytearray,
+        bytes,callable,chr,classmethod,compile,complex,copyright,delattr,dict,
+        dir,divmod,enumerate,eval,exec,exit,float,format,frozenset,getattr,
+        globals,hasattr,hash,help,hex,id,input,int,isinstance,issubclass,iter,
+        len,license,list,locals,map,max,min,next,object,oct,open,ord,pow,
+        property,quit,range,repr,reversed,round,set,setattr,slice,sorted,
+        staticmethod,str,sum,super,tuple,type,vars,zip,inputInt,inputFloat,
+        inputString,msgDlg,askYesNo,enum,clrScr,head,tail,indices,self
+    },
+    keywordstyle=[1]\color{codered},
+    morekeywords=[2]{
+        Database, Cursor,
+        Enum, BaseModel, Extra, StrictInt, Coordinate, BoundingBox, Orientation, Eyes, Gender, AnnotationBase, AnnotationAllowExtra, AnnotationForbidExtra
+    },
+    keywordstyle=[2]\color{codeyellow},
+    basicstyle=\ttfamily\linespread{1}\footnotesize, % \ttfamily\small  \normalfont\ttfamily
+    commentstyle=\color{eclipseStrings},
+    stringstyle=\color{codegreen},
+    xleftmargin=1.5em,
+    tabsize=2,
+    numbers=left,
+    numberstyle=\color{black},
+    stepnumber=1,
+    numbersep=8pt,
+    showstringspaces=false,
+    breaklines=false,
+    frame=lines,
+    morecomment=[l]\#,
+    morestring=[b]',
+    morestring=[b]",
+    morestring=[b]{'''},
+    morestring=[b]{"""},
+    literate=
+        {Ö}{{\"O}}1
+        {Ä}{{\"A}}1
+        {Ü}{{\"U}}1
+        {ß}{{\ss}}1
+        {ü}{{\"u}}1
+        {ä}{{\"a}}1
+        {ö}{{\"o}}1
+        {\ \ }{{\ }}1
+}
+
+\lstdefinelanguage{pseudo}{
+    morekeywords={
+        function, IF, THEN, ELSE, END, return, WHILE, FOR, NOT, IS, public, private, TRY, CATCH, EXCEPTION, RETHROW, IN, THROW, GET, WITH, EACH, RETURN
+    },
+    keywordstyle=\color{codered},
+    basicstyle=\ttfamily\linespread{1}\footnotesize, % \ttfamily\small  \normalfont\ttfamily
+    commentstyle=\color{eclipseStrings},
+    stringstyle=\color{codegreen},
+    xleftmargin=1.5em,
+    tabsize=2,
+    numbers=left,
+    numberstyle=\color{black},
+    stepnumber=1,
+    numbersep=8pt,
+    showstringspaces=false,
+    breaklines=false,
+    frame=lines,
+    morecomment=[l]//,
+    morestring=[b]',
+    morestring=[b]",
+    literate=
+        {Ö}{{\"O}}1
+        {Ä}{{\"A}}1
+        {Ü}{{\"U}}1
+        {ß}{{\ss}}1
+        {ü}{{\"u}}1
+        {ä}{{\"a}}1
+        {ö}{{\"o}}1
+        {\ \ }{{\ }}1
+}
+
+\lstset{aboveskip=0.25cm,belowskip=0pt}
+
+\renewcommand\theadfont{}
+

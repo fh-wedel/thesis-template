@@ -1,0 +1,92 @@
+\chapter{Beispiel eines Code-Kapitels}
+
+\section{Anforderungen}
+
+Hier ein inline-codeblock: \lstinline[language=pseudo]{stop(); // Hammertime!}.\cite{tuoski:2022}
+
+Oder so \lstinline[language=sql]{SELECT * FROM} wie hier.
+
+
+\paragraphnl{Einfügen}
+
+Aliquam molestie fermentum vestibulum. Cras egestas molestie ipsum, vitae malesuada ante consectetur id. 
+
+\paragraphnl{Löschen}
+
+In turpis neque, pharetra eget neque vel, rhoncus tincidunt ex. Sed lacinia fermentum odio quis faucibus. Phasellus blandit orci vitae ipsum rutrum aliquam. 
+
+\paragraphnl{Ändern}
+
+Fusce ipsum nisl, luctus in interdum non, sodales sed lacus. Fusce vitae fermentum tellus, vitae feugiat magna. 
+
+\section{Implementierung}
+
+Fusce luctus eros sem, id porttitor odio vestibulum sed. Etiam nisl eros, mollis rhoncus dolor vel, consectetur dignissim eros. Donec eu justo et ipsum posuere porttitor vitae quis lacus. 
+
+\begin{wrapfigure}[26]{l}{0.5\linewidth}
+% Sprache "sql" ist in header-datei definiert
+\begin{lstlisting}[language=sql]
+CREATE TABLE IF NOT EXISTS 
+"Personen" (
+    id serial NOT NULL,
+    name text NOT NULL,
+    geb_datum date NOT NULL,
+    PRIMARY KEY (id)
+);
+
+CREATE OR REPLACE FUNCTION 
+pruefe_alter()
+    RETURNS TRIGGER
+    LANGUAGE 'plpgsql'
+AS $$
+DECLARE
+	alter_jahre int;
+BEGIN
+	SELECT date_part(
+	    'year', 
+	    age(NEW.geb_datum::TIMESTAMP))
+	INTO alter_jahre;
+	
+	IF alter_jahre < 18 THEN
+	    RAISE EXCEPTION 
+	        'Person ist nicht volljaehrig';
+	END IF;
+	
+	RETURN NEW;
+END;
+$$;
+	
+CREATE OR REPLACE TRIGGER 
+trigger_person_einfügen
+	BEFORE INSERT ON "Personen"
+	FOR EACH ROW
+	EXECUTE PROCEDURE pruefe_alter();
+\end{lstlisting}
+\captionsetup{type=figure}
+\captionof{figure}{Beispiel einer\\Trigger-Definition}
+\label{fig:trigger_example}
+\end{wrapfigure}
+
+Integer venenatis convallis erat, sit amet elementum odio egestas interdum. Phasellus sagittis vestibulum libero vel sodales. Phasellus a facilisis felis, vel mollis velit. Quisque pulvinar turpis vitae bibendum condimentum. Nulla facilisi. Praesent iaculis euismod eros et consequat. Nullam efficitur facilisis sapien. Aenean non laoreet lectus. Phasellus tellus lorem, ullamcorper vel aliquam ut, sollicitudin accumsan nibh. 
+
+Fusce luctus eros sem, id porttitor odio vestibulum sed. Etiam nisl eros, mollis rhoncus dolor vel, consectetur dignissim eros. Donec eu justo et ipsum posuere porttitor vitae quis lacus. Duis convallis tellus non nibh ultrices, eget imperdiet metus iaculis. Integer non feugiat ante. Etiam felis massa, interdum eu egestas vel, eleifend id erat. In nec est ac orci elementum porttitor non non lorem. 
+
+\clearpage
+
+\subsection{Unterthema}
+
+Vivamus quis lacus quis urna suscipit auctor. Nunc dignissim massa eu leo condimentum euismod. 
+
+\subsection{Voraussetzungen}
+
+Nunc mattis quis mauris a pharetra. Duis eu iaculis magna, id tristique dui. Duis sagittis mauris id elit maximus auctor. 
+
+\subsection{Einfügen}
+
+\paragraphnl{Einfügen aus Datei}
+
+Pellentesque vitae ipsum elementum, iaculis enim mollis, fringilla sem. Integer eget odio porta, congue quam 
+
+\subsection{Einfügen aus Webrequest}
+
+Nulla imperdiet turpis in lorem eleifend aliquet sed ac libero. Morbi sed ultricies ipsum. 
