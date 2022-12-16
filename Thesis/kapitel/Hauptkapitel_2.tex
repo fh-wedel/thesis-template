@@ -1,6 +1,12 @@
-\chapter{Beispiel eines Code-Kapitels}
+\chapter{Implementierung}
 
-\section{Anforderungen}
+Kapiteleinleitung, die einen Überblick über die Inhalte dieses Kapitels gibt. Sie kann die die wesentlichen Punkte hervorheben und auf die Bedeutung der einzelnen Aspekte eingehen.
+
+Dieses Kapitel führt die Behandlung von Quellcode in \LaTeX-Dokumenten vor. 
+
+\lipsum[1][1-4]
+
+\section{Grundlegende Funktionalität}
 
 Hier ein inline-codeblock: \lstinline[language=pseudo]{stop(); // Hammertime!}.\cite{tuoski:2022}
 
@@ -19,9 +25,13 @@ In turpis neque, pharetra eget neque vel, rhoncus tincidunt ex. Sed lacinia ferm
 
 Fusce ipsum nisl, luctus in interdum non, sodales sed lacus. Fusce vitae fermentum tellus, vitae feugiat magna. 
 
-\section{Implementierung}
+\bigskip
+\lipsum[1]
+\newpage
 
-Fusce luctus eros sem, id porttitor odio vestibulum sed. Etiam nisl eros, mollis rhoncus dolor vel, consectetur dignissim eros. Donec eu justo et ipsum posuere porttitor vitae quis lacus. 
+\section{Realisierung im Detail}
+
+Fusce luctus eros sem, id porttitor odio vestibulum sed. Etiam nisl eros, mollis rhoncus dolor vel, consectetur dignissim eros.
 
 \begin{wrapfigure}[26]{l}{0.5\linewidth}
 % Sprache "sql" ist in header-datei definiert
@@ -67,19 +77,30 @@ trigger_person_einfügen
 \label{fig:trigger_example}
 \end{wrapfigure}
 
+Abbildungen, so wie Abbildung \vref{fig:trigger_example} sollten grundsätzlich im Text angesprochen und erläutert werden.
+
 Integer venenatis convallis erat, sit amet elementum odio egestas interdum. Phasellus sagittis vestibulum libero vel sodales. Phasellus a facilisis felis, vel mollis velit. Quisque pulvinar turpis vitae bibendum condimentum. Nulla facilisi. Praesent iaculis euismod eros et consequat. Nullam efficitur facilisis sapien. Aenean non laoreet lectus. Phasellus tellus lorem, ullamcorper vel aliquam ut, sollicitudin accumsan nibh. 
 
 Fusce luctus eros sem, id porttitor odio vestibulum sed. Etiam nisl eros, mollis rhoncus dolor vel, consectetur dignissim eros. Donec eu justo et ipsum posuere porttitor vitae quis lacus. Duis convallis tellus non nibh ultrices, eget imperdiet metus iaculis. Integer non feugiat ante. Etiam felis massa, interdum eu egestas vel, eleifend id erat. In nec est ac orci elementum porttitor non non lorem. 
 
-\clearpage
+\newpage
+Weitere Details zeigt Abbildung \ref{listing:sql-abfrage1}: In Zeile 1 werden diejenigen Spalten angegeben, die im Resultat auftreten sollen.
+Zeile 2 spricht die  Tabellen an, aus denen die Daten zu beziehen sind. Zeile 3 stellt die Kriterien auf, die alle ausgewählten Datensätze erfüllen müssen (hier Name mit A beginnend). Zeile 4 schließlich legt eine Sortierreihenfolge der Ausgabe fest (hier aufsteigend nach Name der Person). Vergleiche in diesem Zusammenhang die Tabellen-Definition von \texttt{'Person'} aus Abbildung \vref{fig:trigger_example}.
+
+\begin{figure}[t]
+\lstset{numbers=left, stepnumber=1}
+\begin{lstlisting}[firstnumber = 1]
+SELECT name, geb_datum
+FROM "Personen"
+WHERE name like "A%"
+ORDER BY name
+\end{lstlisting}
+\caption{\label{listing:sql-abfrage1}Eine SQL-Abfrage}
+\end{figure}
 
 \subsection{Unterthema}
 
 Vivamus quis lacus quis urna suscipit auctor. Nunc dignissim massa eu leo condimentum euismod. 
-
-\subsection{Voraussetzungen}
-
-Nunc mattis quis mauris a pharetra. Duis eu iaculis magna, id tristique dui. Duis sagittis mauris id elit maximus auctor. 
 
 \subsection{Einfügen}
 
@@ -87,6 +108,6 @@ Nunc mattis quis mauris a pharetra. Duis eu iaculis magna, id tristique dui. Dui
 
 Pellentesque vitae ipsum elementum, iaculis enim mollis, fringilla sem. Integer eget odio porta, congue quam 
 
-\subsection{Einfügen aus Webrequest}
+\paragraphnl{Einfügen aus Webrequest}
 
 Nulla imperdiet turpis in lorem eleifend aliquet sed ac libero. Morbi sed ultricies ipsum. 

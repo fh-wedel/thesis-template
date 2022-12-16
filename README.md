@@ -8,8 +8,8 @@ PDF erzeugen:
 
     % cd Thesis
     % pdflatex thesis_main.tex
-    % bibtex thesis_main        # optional for bibliography
-    % pdflatex thesis_main.tex  # several times
+    % biber thesis_main         # optional for bibliography
+    % pdflatex thesis_main.tex  # several times in order to resolve open references
     
 Oder mit Overleaf bearbeiten und compilieren lassen.
 
