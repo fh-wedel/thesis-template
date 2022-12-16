@@ -1,7 +1,3 @@
-% Hint: "include" did not work for me using:
-% This is pdfTeX, Version 3.1415926-2.4-1.40.13 (TeX Live 2012/Debian)
-% Replaced "include" with "input" to make it work.
-
 \input{stuff/header}
 
 \begin{document}
@@ -9,37 +5,40 @@
 \pagenumbering{Roman}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
 
 % Titelseite
-\include{stuff/Titelseite}
+\newgeometry{left=3cm,right=2cm,top=2.0cm,bottom=2.0cm}
+\include{stuff/titelseite}
+\restoregeometry
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Mehr Platz für Nummerierung benötigt in Verzeichnissen, wenn ein Kapitel 10 oder mehr Bilder hat
+\DeclareTOCStyleEntry[numwidth=3em]{tocline}{figure} % Für Abbildungsverzeichnis
+%\DeclareTOCStyleEntry[numwidth=3em]{tocline}{table} % Für Tabellenverzeichnis
 
 \tableofcontents
 \listoffigures
-\lstlistoflistings
+\listoftables
 \cleardoublepage
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \pagenumbering{arabic}
 
+\begin{onehalfspace}
+\include{kapitel/Abstract}
 \include{kapitel/Einleitung}
 \include{kapitel/Grundlagen}
-\include{kapitel/Ist_Analyse}
-\include{kapitel/Anforderungsanalyse}
-\include{kapitel/Entwicklungsanalyse}
+\include{kapitel/Hauptkapitel_1}
+\include{kapitel/Hauptkapitel_2}
 \include{kapitel/Zusammenfassung}
-\include{kapitel/Ausblick}
-\include{kapitel/Literaturverzeichnis}
+\include{kapitel/Anhang}
+\end{onehalfspace}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\printbibliography{} % create with BibTeX
 
 \include{stuff/footer}
 

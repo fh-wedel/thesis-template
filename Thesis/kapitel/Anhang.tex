@@ -1,0 +1,126 @@
+\appendix
+\chapter{Anhang}
+
+\vspace{-1cm}
+\section{Unterteilung der Annotations-Attribute}
+\label{sec:attribute_grouping}
+
+\vspace{-1cm}
+\begin{minipage}[t]{0.47\linewidth}
+\begin{lstlisting}[language=json,title=Face Position Orientation]
+{
+    "bounding_box": {
+        "position": {
+            "x": int,
+            "y": int
+        }
+        "width": int,
+        "height": int
+    },
+    "eyes": {
+        "left": {
+            "x": int,
+            "y": int
+        },
+        "right": {
+            "x": int,
+            "y": int
+        }
+    },
+    "orientation": {
+        "yaw": int,
+        "pitch": int,
+        "roll": int
+    },
+    "is_gaze_frontal": bool,
+    "is_pose_ok": bool
+}
+\end{lstlisting}
+\end{minipage}
+%
+\hspace{0.01\linewidth}
+%
+\begin{minipage}[t]{0.47\linewidth}
+%
+\begin{minipage}[t]{\linewidth}
+\begin{lstlisting}[language=json,title=Image Details]
+{
+    "is_color_ok": bool,
+    "is_exposure_ok": bool,
+    "is_focus_ok": bool,
+    "is_occluded": bool,
+    "has_hotspots": bool,
+    "has_shadows": bool,
+    "has_red_eyes": bool
+}
+\end{lstlisting}
+\end{minipage}
+%
+\begin{minipage}[t]{\linewidth}
+\begin{lstlisting}[language=json,title=Face Demographics]
+{
+    "age": int,
+    "age_estimated": int,
+    "ethnicity": int,
+    "gender": string
+}
+\end{lstlisting}
+\end{minipage}
+%
+\begin{minipage}[t]{\linewidth}
+\begin{lstlisting}[language=json,title=Face Details]
+{
+    "is_disguised": bool,
+    "is_expression_neutral": bool,
+    "eyes_open": bool,
+    "has_facial_hair": bool,
+    "mouth_closed": bool,
+    "has_glasses": bool,
+    "has_glasses_reflection": bool,
+    "no_face_found": bool,
+}
+\end{lstlisting}
+\end{minipage}
+%
+\end{minipage}
+
+\clearpage
+
+\begin{minipage}[t]{\linewidth}
+\begin{lstlisting}[language=python,title=AnnotationSchema.py,firstnumber=34]
+class AnnotationBase(BaseModel):
+    age: StrictInt = None
+    age_estimated: StrictInt = None
+    gender: Gender = None
+    ethnicity: StrictInt = None
+    bounding_box: BoundingBox = None
+    orientation: Orientation = None
+    eyes: Eyes = None
+    eyes_open: bool = None
+    mouth_closed: bool = None
+    is_disguised: bool = None
+    is_expression_neutral: bool = None
+    is_gaze_frontal: bool = None
+    is_pose_ok: bool = None
+    is_color_ok: bool = None
+    is_exposure_ok: bool = None
+    is_background_ok: bool = None
+    is_focus_ok: bool = None
+    is_occluded: bool = None
+    has_hotspots: bool = None
+    has_shadows: bool = None
+    has_glasses: bool = None
+    has_facial_hair: bool = None
+    has_glasses_reflection: bool = None
+    has_red_eyes: bool = None
+    no_face_found: bool = None
+
+
+class AnnotationAllowExtra(AnnotationBase, extra=Extra.allow):
+    pass
+
+
+class AnnotationForbidExtra(AnnotationBase, extra=Extra.forbid):
+    pass
+\end{lstlisting}
+\end{minipage}

@@ -10,6 +10,8 @@ PDF erzeugen:
     % pdflatex thesis_main.tex
     % bibtex thesis_main        # optional for bibliography
     % pdflatex thesis_main.tex  # several times
+    
+Oder mit Overleaf bearbeiten und compilieren lassen.
 
 fork & enjoy
 
